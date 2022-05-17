@@ -59,8 +59,11 @@
   (insert "\n; Ledger-mode: End sort\n\n"))
 
 (defun ledger-sort-startkey ()
-  "Return the actual date so the sort subroutine doesn't sort on the entire first line."
-  (buffer-substring-no-properties (point) (+ 10 (point))))
+  "Return the date of the transaction in format %Y%02m%02d."
+  (format-time-string
+   "%Y%02m%02d"
+   (ledger-parse-iso-date
+    (buffer-substring-no-properties (point) (+ 10 (point))))))
 
 (defun ledger-sort-region (beg end)
   "Sort the region from BEG to END in chronological order."
